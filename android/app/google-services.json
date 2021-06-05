@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "656585636998",
+    "project_id": "todoapptakehome",
+    "storage_bucket": "todoapptakehome.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:656585636998:android:3b445e01dfd4ff0539a507",
+        "android_client_info": {
+          "package_name": "TateyanaHendricks.to_do"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "656585636998-0llp91aon8mqjnog9bjajdt5g0rlcsea.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgiyTWivHC81Tj0X1ArO09jOh_3D0XOAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "656585636998-0llp91aon8mqjnog9bjajdt5g0rlcsea.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
