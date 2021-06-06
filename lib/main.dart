@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'Model-Third Party/sharedPreferences.dart';
+import 'Services.dart';
+
 void main() {
+  setupServiceLocator();
   runApp(MyApp());
 }
 
@@ -57,6 +61,15 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+  }
+
+  SharedPreferencesForDeviceID spdeviceID =
+      serviceLocator<SharedPreferencesForDeviceID>();
+  @override
+  void initState() {
+    spdeviceID.checkForDeviceID();
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
