@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-
+import 'package:to_do/View-UI/List_Stream.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'Model-Third Party/Firestore.dart';
 import 'Model-Third Party/sharedPreferences.dart';
 import 'Services.dart';
+import 'View-UI/ListTile.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   setupServiceLocator();
   runApp(MyApp());
 }
@@ -63,15 +68,28 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  var id;
+  needThis() async {
+    await spdeviceID.checkForDeviceID().then((value) {
+      setState(() {
+        id = value;
+      });
+    });
+  }
+
+  FireStore database = serviceLocator<FireStore>();
   SharedPreferencesForDeviceID spdeviceID =
       serviceLocator<SharedPreferencesForDeviceID>();
+  final TextEditingController _controller = TextEditingController();
+
   @override
   void initState() {
-    spdeviceID.checkForDeviceID();
+    needThis();
     // TODO: implement initState
     super.initState();
   }
 
+  String additionToList = "dummyValue";
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -80,49 +98,66 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+        appBar: AppBar(
+          actions: [
+            DragTarget(
+              builder: (context, candidateData, rejectedData) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 18.0),
+                  child: Icon(Icons.delete),
+                );
+              },
+              onAccept: (data) {
+                print(data);
+                database.deleteItemFromDocuments(data);
+              },
+            )
+          ],
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(widget.title),
+        ),
+        body: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    color: Colors.amberAccent,
+                    child: TextField(
+                        controller: _controller,
+                        onChanged: (value) {
+                          print(value);
+                          additionToList = value;
+                        }),
+                  ),
+                ),
+                Expanded(
+                  child: TextButton(
+                    child: Icon(
+                      Icons.add_circle,
+                      color: Colors.purple,
+                    ),
+                    onPressed: () {
+                      database.addItemToDocuments(additionToList);
+                      //print(additionToList);
+                    },
+                  ),
+                )
+              ],
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-              key: Key("textCounter"),
+            ToDoListStream(
+              deviceID: id,
             ),
           ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-        key: Key("buttonToAdd"),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        ));
   }
+}
+
+getValue(value) {
+  var additionToList = value;
+  return additionToList;
 }
