@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   pleaseWork() async {
     SharedPreferencesForDeviceID prefs = SharedPreferencesForDeviceID();
-    var deviceID = await prefs.checkForDeviceID();
+    var deviceID = await prefs.getDeviceID();
     print(deviceID);
     Navigator.push(
         context,

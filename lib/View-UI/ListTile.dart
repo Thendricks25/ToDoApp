@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:to_do/View%20Model/cross_off_Provider.dart';
 
 class ListBlock extends StatefulWidget {
   ListBlock({this.id, this.item});
   final item;
   final id;
+
   @override
   _ListBlockState createState() => _ListBlockState();
 }
 
 class _ListBlockState extends State<ListBlock> {
-  void _strikeIt(BuildContext context) {
-    Provider.of<CrossOff>(context, listen: false).strikeThough();
+  var crossOff = false;
+  bool get striker => crossOff;
+
+  strikeThough() {
+    setState(() {
+      crossOff = !crossOff;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    bool crossOff = Provider.of<CrossOff>(context).striker;
     return GestureDetector(
       onHorizontalDragStart: (details) {
-        _strikeIt(context);
+        strikeThough();
       },
       child: LongPressDraggable(
         data: widget.id,
