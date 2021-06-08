@@ -1,23 +1,21 @@
 // here will house the code to get and set the device ID shared preference
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:to_do/View Model/UniqueDeviceID.dart';
 
 class SharedPreferencesForDeviceID extends ChangeNotifier {
   CreateDeviceID _createDeviceID = CreateDeviceID();
 
-  checkForDeviceID() async {
-    await getDeviceID().then((value) async {
-      if (value == null) {
-        print("No device ID set up. Setting up device ID.");
-        await setDeviceID().whenComplete(() async {
-          await getDeviceID();
-          notifyListeners();
-          print("Device ID is set.");
-        });
-      }
-    });
-    notifyListeners();
+  checkForDeviceID() {
+    var get = getDeviceID();
+    if (get == null) {
+      print("No device ID set up. Setting up device ID.");
+      setDeviceID().whenComplete(() {
+        get = getDeviceID();
+        print("Device ID is set.");
+      });
+    }
+    return get;
   }
 
   setDeviceID() async {
@@ -33,4 +31,3 @@ class SharedPreferencesForDeviceID extends ChangeNotifier {
     return gotDeviceID;
   }
 }
-//My unique device ID: 2076 2021-06-05 22:41:41.398766

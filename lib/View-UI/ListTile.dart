@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:to_do/Model-Third%20Party/Firestore.dart';
+import 'package:to_do/View%20Model/cross_off_Provider.dart';
 
 class ListBlock extends StatefulWidget {
   ListBlock({this.id, this.item});
@@ -11,20 +11,16 @@ class ListBlock extends StatefulWidget {
 }
 
 class _ListBlockState extends State<ListBlock> {
-  var crossOff = false;
-
-  strikeThough() {
-    setState(() {
-      crossOff = !crossOff;
-    });
+  void _strikeIt(BuildContext context) {
+    Provider.of<CrossOff>(context, listen: false).strikeThough();
   }
 
   @override
   Widget build(BuildContext context) {
-    bool fade = true;
+    bool crossOff = Provider.of<CrossOff>(context).striker;
     return GestureDetector(
       onHorizontalDragStart: (details) {
-        strikeThough();
+        _strikeIt(context);
       },
       child: LongPressDraggable(
         data: widget.id,
@@ -38,19 +34,22 @@ class _ListBlockState extends State<ListBlock> {
             ),
           ),
         ),
-        child: AnimatedContainer(
-          duration: Duration(seconds: 3),
-          color: fade ? Colors.lightBlue : Colors.white,
-          child: ListTile(
-            title: Text(
-              widget.item,
-              style: TextStyle(
-                  fontSize: 25,
-                  decoration: crossOff
-                      ? TextDecoration.lineThrough
-                      : TextDecoration.none),
+        child: Column(
+          children: [
+            ListTile(
+              title: Text(
+                widget.item,
+                style: TextStyle(
+                    fontSize: 25,
+                    decoration: crossOff
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none),
+              ),
             ),
-          ),
+            Divider(
+              color: Colors.black54,
+            )
+          ],
         ),
         childWhenDragging: Container(),
       ),
