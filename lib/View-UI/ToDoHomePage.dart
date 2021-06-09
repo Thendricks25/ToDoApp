@@ -15,7 +15,6 @@ class _ToDoAppHomePageState extends State<ToDoAppHomePage> {
   FireStore database = serviceLocator<FireStore>();
 
   final TextEditingController _controller = TextEditingController();
-
   String additionToList;
   @override
   Widget build(BuildContext context) {
@@ -36,8 +35,6 @@ class _ToDoAppHomePageState extends State<ToDoAppHomePage> {
               },
             )
           ],
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
           title: Text("To do App"),
           centerTitle: true,
           leading: Container(),
@@ -84,6 +81,7 @@ class _ToDoAppHomePageState extends State<ToDoAppHomePage> {
                       ),
                       onPressed: () {
                         database.addItemToDocuments(widget.id, additionToList);
+
                         _controller.clear();
                       },
                     )

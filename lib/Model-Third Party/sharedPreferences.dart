@@ -1,9 +1,8 @@
 // here will house the code to get and set the device ID shared preference
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:to_do/View Model/UniqueDeviceID.dart';
 
-class SharedPreferencesForDeviceID extends ChangeNotifier {
+class SharedPreferencesForDeviceID {
   CreateDeviceID _createDeviceID = CreateDeviceID();
 
   setDeviceID() async {

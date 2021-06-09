@@ -17,13 +17,24 @@ class _SplashScreenState extends State<SplashScreen> {
   pleaseWork() async {
     SharedPreferencesForDeviceID prefs = SharedPreferencesForDeviceID();
     var deviceID = await prefs.getDeviceID();
-    print(deviceID);
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ToDoAppHomePage(
-                  id: deviceID,
-                )));
+    if (deviceID != null) {
+      print(deviceID);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ToDoAppHomePage(
+                    id: deviceID,
+                  )));
+    } else if (deviceID == null) {
+      var deviceID = await prefs.getDeviceID();
+      print(deviceID);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ToDoAppHomePage(
+                    id: deviceID,
+                  )));
+    }
   }
 
   @override
@@ -31,6 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('To do',
                 style: TextStyle(fontSize: 25, color: Colors.lightBlue)),
