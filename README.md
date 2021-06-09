@@ -1,16 +1,5 @@
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/67491535/121304886-c6805d80-c8b1-11eb-89c8-88e3de318af2.gif)
 # to_do
 
 A take home project for my interview with Opun.ai
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
